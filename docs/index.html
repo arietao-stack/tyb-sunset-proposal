@@ -305,6 +305,35 @@
   tr.has-cmt::after{content:none}
   tr.has-cmt td:last-child::after{content:"💬";margin-left:8px}
 
+  /* ---------- edit mode ---------- */
+  .edit-toggle{
+    position:fixed;left:18px;bottom:64px;z-index:60;
+    font-family:var(--disp);font-size:13px;
+    color:var(--lavender-dim);background:rgba(22,17,34,.8);
+    border:1px solid rgba(196,181,253,.35);border-radius:99px;
+    padding:9px 16px;cursor:pointer;
+  }
+  .edit-toggle.on{background:var(--green);color:#14320F;border-color:var(--green)}
+  .frame[contenteditable="true"]{outline:2px dashed rgba(74,222,128,.4);outline-offset:10px;border-radius:8px}
+
+  /* ---------- callout ---------- */
+  .callout{
+    display:flex;gap:10px;align-items:flex-start;
+    border:1.5px solid rgba(251,191,36,.65);background:rgba(251,191,36,.09);
+    border-radius:16px;padding:13px 16px;margin-top:16px;
+    font-size:13.5px;line-height:1.55;color:var(--text);
+  }
+  .callout .ic{flex-shrink:0;font-size:16px;line-height:1.3}
+  .callout strong{color:var(--amber)}
+
+  /* ---------- horizontal bars (html, editable) ---------- */
+  .hbar{display:grid;grid-template-columns:140px 1fr 74px;gap:12px;align-items:center;margin-top:14px}
+  .hbar .lbl{font-size:13.5px;color:var(--text-dim);line-height:1.3}
+  .hbar .track{height:26px;border-radius:99px;background:rgba(196,181,253,.1);overflow:hidden}
+  .hbar .fillbar{height:100%;border-radius:99px;background:linear-gradient(90deg,#9377F2,#A78BFA);min-width:8px}
+  .hbar .val{font-family:var(--disp);font-size:15px;color:var(--white);text-align:right;font-variant-numeric:tabular-nums}
+  @media(max-width:640px){.hbar{grid-template-columns:1fr;gap:6px}.hbar .val{text-align:left}}
+
   /* ---------- nav dots ---------- */
   .navdots{
     position:fixed;right:18px;top:50%;transform:translateY(-50%);
@@ -326,7 +355,7 @@
   }
 
   /* ---------- capture mode (?only=sN) ---------- */
-  .capture .navdots,.capture .hint,.capture .slideno,.capture .addimg,.capture .media-x,.capture .cmt-toggle{display:none}
+  .capture .navdots,.capture .hint,.capture .slideno,.capture .addimg,.capture .media-x,.capture .cmt-toggle,.capture .edit-toggle{display:none}
   .capture .fill{border-bottom:none;cursor:default}
   .capture .blob{animation:none}
 
@@ -356,7 +385,7 @@
     <div class="agenda">
       <span>1 · Recommendation</span><span>2 · Scorecard</span><span>3 · Money funnel</span><span>4 · Why</span><span>5 · Wind-down plan</span><span>6 · Budget &amp; next steps</span>
     </div>
-    <div class="hint">📊 <span>Data: <b>TYB dashboard, Apr 1 – Jul 14, 2026</b> · dashed = click to edit · hover a slide for <b>＋ Add image</b> · <b>💬</b> toggles comment mode</span></div>
+    <div class="hint">📊 <span>Data: <b>TYB dashboard, Apr 1 – Jul 14, 2026</b> · <b>✏️ Edit</b> = sửa mọi text · <b>＋ Add image</b> khi hover slide · <b>💬</b> = comment &amp; highlight</span></div>
   </div>
   <div class="slideno">01 / 07</div>
 </section>
@@ -372,7 +401,7 @@
           <div class="n">1</div>
           <div>
             <h3>Engagement doesn't convert.</h3>
-            <p>72% of 1,973 members engage in-app. After 4 months: <strong>≈$50 net revenue, 1 clearly TYB-driven order, 2 obsessions</strong>. The activity never reaches our store.</p>
+            <p>72% of 1,973 members engage in-app. In 4 months, <strong>exactly 1 member actually bought</strong>: an $80 gift set — $30 covered by coins, $50 paid. Nearly all other reported GMV is <strong>our own seeding orders</strong>, which TYB counts as member revenue.</p>
           </div>
         </div>
         <div class="vp">
@@ -386,7 +415,7 @@
           <div class="n">3</div>
           <div>
             <h3>Waiting costs $1,333 a month.</h3>
-            <p>Cancelling still means <strong>3 more months of 2 challenges/day + targets</strong> — with almost no support from the TYB team. Each month we wait adds another month of that. <strong>Notice now = cheapest exit.</strong></p>
+            <p>Cancelling still means <strong>3 more months of 2 challenges/day + targets</strong> — while TYB's hands-on support goes to its Platinum/Gold brands, not our tier. Each month we wait adds another month. <strong>Notice now = cheapest exit.</strong></p>
           </div>
         </div>
       </div>
@@ -403,11 +432,11 @@
     <h2>High engagement. Almost no business.</h2>
     <div class="tiles">
       <div class="tile"><span class="big">1,973</span><span class="lbl">Community members</span><span class="pill warn">+33 in Jul 1–14</span></div>
-      <div class="tile"><span class="big">72%</span><span class="lbl">Members engaged</span><span class="pill ok">But only in-app</span></div>
-      <div class="tile"><span class="big">49</span><span class="lbl">Member orders · 4 months</span><span class="pill warn">1 clearly from TYB</span></div>
-      <div class="tile"><span class="big">$8.17K <span class="dim2">→</span> ≈$50</span><span class="lbl">Gross → net revenue</span><span class="pill miss">Rewards absorb 99%</span></div>
-      <div class="tile"><span class="big">2</span><span class="lbl">Obsessions (UGC posts)</span><span class="pill miss">From one member</span></div>
-      <div class="tile"><span class="big">0.03%</span><span class="lbl">Our customers in TYB</span><span class="pill miss">0.02% launch cohort</span></div>
+      <div class="tile"><span class="big">72%</span><span class="lbl">Members engaged</span><span class="pill ok">High on polls · in-app</span></div>
+      <div class="tile"><span class="big">101</span><span class="lbl">Challenges posted by our team</span><span class="pill ok">Cadence held 30–36/mo</span></div>
+      <div class="tile"><span class="big">1</span><span class="lbl">Real member purchase</span><span class="pill miss">$80 order · $30 coins · $50 cash</span></div>
+      <div class="tile"><span class="big">$8.17K</span><span class="lbl">Reported GMV</span><span class="pill miss">Mostly our own orders</span></div>
+      <div class="tile"><span class="big">2</span><span class="lbl">Obsessions (UGC posts)</span><span class="pill miss">From the same member</span></div>
     </div>
     <div class="card" style="margin-top:16px">
       <div class="chart-title">Community members over time</div>
@@ -430,7 +459,7 @@
         <text x="782" y="194" text-anchor="middle" font-size="13" fill="#B9AEDF">Jul 1–14</text>
       </svg>
     </div>
-    <p class="lede"><strong>Read:</strong> the app numbers look fine. The money numbers don't — and growth already hit its ceiling.</p>
+    <p class="lede"><strong>Read:</strong> our team kept the club active and the app numbers look healthy. But the buying signal is one order — and the GMV figure can't be taken at face value (next slide).</p>
   </div>
   <div class="slideno">03 / 07</div>
 </section>
@@ -439,7 +468,7 @@
 <section class="slide" id="s4">
   <div class="frame">
     <div class="eyebrow">The money funnel</div>
-    <h2>18,892 responses became ≈$50 of net revenue</h2>
+    <h2>The real number is $50, not $8.17K</h2>
     <div class="grid g2">
       <div class="card">
         <div class="chart-title">Where the value leaks · Apr–Jul</div>
@@ -450,41 +479,31 @@
           </div>
           <div class="fstage">
             <div class="fshape"><div class="fs2"></div></div>
-            <div class="fmeta"><b>49</b><span>Orders — 0.26% of responses</span></div>
+            <div class="fmeta"><b>49</b><span>Orders TYB counted — 48 are our own creator-seeding orders</span></div>
           </div>
           <div class="fstage">
             <div class="fshape"><div class="fs3"></div></div>
-            <div class="fmeta"><b>$8.17K</b><span>Gross revenue — $167 per order on paper</span></div>
+            <div class="fmeta"><b>$8.17K</b><span>Reported GMV — inflated by those brand orders</span></div>
           </div>
           <div class="fstage">
             <div class="fshape"><div class="fs4"></div></div>
-            <div class="fmeta"><b style="color:var(--red)">≈$50</b><span class="leak">Net after rewards. Only 1 order clearly came from TYB — coin redemption, bought in-app.</span></div>
+            <div class="fmeta"><b style="color:var(--red)">$50</b><span class="leak">Real member revenue: 1 order — $80 gift set, −$30 coins, $50 paid</span></div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="chart-title">Monthly GMV</div>
-        <svg class="chart" viewBox="0 0 560 244" role="img" aria-label="Monthly gross revenue: April $1.11K; May $3.73K; June $2.35K; July 1st to 14th $0.99K, on pace for about $2K">
-          <line x1="20" y1="190" x2="540" y2="190" stroke="rgba(196,181,253,.3)" stroke-width="1"/>
-          <rect x="53" y="151" width="64" height="39" rx="4" fill="#9377F2"><title>Apr: $1.11K</title></rect>
-          <rect x="183" y="60" width="64" height="130" rx="4" fill="#9377F2"><title>May: $3.73K (peak)</title></rect>
-          <rect x="313" y="108" width="64" height="82" rx="4" fill="#9377F2"><title>Jun: $2.35K</title></rect>
-          <rect x="443" y="155" width="64" height="35" rx="4" fill="#9377F2"><title>Jul 1–14: $0.99K</title></rect>
-          <rect x="443" y="121" width="64" height="34" rx="4" fill="rgba(147,119,242,.22)" stroke="#9377F2" stroke-width="1.5" stroke-dasharray="5 4"><title>Jul full-month pace: ≈$2K</title></rect>
-          <text x="85" y="141" text-anchor="middle" font-size="14" font-weight="600" fill="#EDE9FA">$1.11K</text>
-          <text x="215" y="50" text-anchor="middle" font-size="14" font-weight="600" fill="#EDE9FA">$3.73K</text>
-          <text x="345" y="98" text-anchor="middle" font-size="14" font-weight="600" fill="#EDE9FA">$2.35K</text>
-          <text x="475" y="111" text-anchor="middle" font-size="13" font-weight="600" fill="#EDE9FA">$0.99K <tspan fill="#B9AEDF" font-weight="400">· pace ≈$2K</tspan></text>
-          <text x="215" y="32" text-anchor="middle" font-size="11.5" fill="#B9AEDF">peak</text>
-          <text x="85" y="216" text-anchor="middle" font-size="13" fill="#B9AEDF">Apr</text>
-          <text x="215" y="216" text-anchor="middle" font-size="13" fill="#B9AEDF">May</text>
-          <text x="345" y="216" text-anchor="middle" font-size="13" fill="#B9AEDF">Jun</text>
-          <text x="475" y="216" text-anchor="middle" font-size="13" fill="#B9AEDF">Jul 1–14</text>
-        </svg>
-        <p style="margin-top:12px">July is fairly counted as a half month. Even doubled to ≈$2K, it's about <strong>half of May's peak</strong>.</p>
+        <div class="chart-title">What "engaged" means, by format</div>
+        <div class="hbar"><span class="lbl">Polls</span><div class="track"><div class="fillbar" style="width:100%"></div></div><span class="val">≈273</span></div>
+        <div class="hbar"><span class="lbl">Text responses</span><div class="track"><div class="fillbar" style="width:17%"></div></div><span class="val">≈47</span></div>
+        <div class="hbar"><span class="lbl">Content uploads</span><div class="track"><div class="fillbar" style="width:2%"></div></div><span class="val">≈5</span></div>
+        <p style="margin-top:16px;font-size:13.5px;color:var(--text-dim)">Average responses per challenge. Members tap polls happily — the formats that create content, traffic, and referrals barely move.</p>
       </div>
     </div>
-    <p class="lede"><strong>Read:</strong> every step that touches money loses ~99% of the value. That's the platform, not our execution.</p>
+    <div class="callout">
+      <span class="ic">⚠️</span>
+      <div><strong>Measurement issue:</strong> TYB attributes every order from our linked account to "member GMV". Our monthly creator-seeding orders are placed from that account — so the platform counts <strong>our own spending</strong> as community revenue. The only verified member purchase is the $50 order above.</div>
+    </div>
+    <p class="lede"><strong>Read:</strong> the club is active, but the deep actions — buying, posting, referring — round to one member. And the platform's own revenue metric overstates reality.</p>
   </div>
   <div class="slideno">04 / 07</div>
 </section>
@@ -496,9 +515,9 @@
     <h2>Why it doesn't work for us</h2>
     <div class="grid g4">
       <div class="card">
-        <div class="kicker">1 · Stays in-app</div>
-        <h3>Coins, not customers</h3>
-        <p>Members do challenges for coins. They don't visit our page or buy — net ≈$50.</p>
+        <div class="kicker">1 · Shallow by design</div>
+        <h3>Taps, not actions</h3>
+        <p>Polls get ~273 answers; uploads get ~5. The deep actions that create traffic and sales barely happen.</p>
       </div>
       <div class="card">
         <div class="kicker">2 · Growth stopped</div>
@@ -511,13 +530,13 @@
         <p>The brands that win on TYB arrive famous. We're still building awareness.</p>
       </div>
       <div class="card">
-        <div class="kicker">4 · No support</div>
-        <h3>$1,333/mo, little help</h3>
-        <p>Slow replies, no guidance, no help growing the club. We do all the work.</p>
+        <div class="kicker">4 · Support is tiered</div>
+        <h3>Platinum brands first</h3>
+        <p>Replies are slow and hands-on help goes to TYB's Platinum/Gold tier. $1,333/mo doesn't buy us that.</p>
       </div>
     </div>
     <div class="card" style="margin-top:16px">
-      <div class="chart-title">Effort stayed high — results fell anyway</div>
+      <div class="chart-title">Our cadence stayed high — the response didn't</div>
       <svg class="chart" viewBox="0 0 920 404" role="img" aria-label="Challenges posted per month versus engaged users per month, April to mid-July">
         <text x="30" y="22" font-size="11.5" font-weight="700" letter-spacing="1.5" fill="#A78BFA">CHALLENGES POSTED</text>
         <line x1="30" y1="160" x2="890" y2="160" stroke="rgba(196,181,253,.3)" stroke-width="1"/>
@@ -547,7 +566,7 @@
         <text x="568" y="380" text-anchor="middle" font-size="13" fill="#B9AEDF">Jun</text>
         <text x="782" y="380" text-anchor="middle" font-size="13" fill="#B9AEDF">Jul 1–14</text>
       </svg>
-      <p style="margin-top:10px;font-size:13.5px;color:var(--text-dim)">101 challenges since April — cadence held at 30–36/month from May. Engagement peaked once and kept sliding.</p>
+      <p style="margin-top:10px;font-size:13.5px;color:var(--text-dim)">101 challenges since April — near-daily posting from our side, with referral rewards attached. Effort isn't the gap; depth of member action is.</p>
     </div>
   </div>
   <div class="slideno">05 / 07</div>
@@ -640,6 +659,25 @@
 
 <script>
 (function(){
+  /* ---------- restore whole-slide text edits ---------- */
+  var EKEY="tyb-edits-v1";
+  var edits={};
+  try{edits=JSON.parse(localStorage.getItem(EKEY)||"{}")}catch(e){}
+  Object.keys(edits).forEach(function(id){
+    var s=document.getElementById(id);
+    var f=s&&s.querySelector(".frame");
+    if(f) f.innerHTML=edits[id];
+  });
+  function saveFrame(slide){
+    var f=slide.querySelector(".frame");
+    if(!f)return;
+    var clone=f.cloneNode(true);
+    var m=clone.querySelector(".media-row");
+    if(m) m.remove();
+    edits[slide.id]=clone.innerHTML;
+    try{localStorage.setItem(EKEY,JSON.stringify(edits))}catch(e){}
+  }
+
   /* ---------- editable fills ---------- */
   var KEY="tyb-sunset-deck-v3";
   var saved={};
@@ -802,7 +840,7 @@
   Object.keys(comments).forEach(function(k){applyComment(k,comments[k])});
   document.addEventListener("click",function(e){
     if(!cmtMode)return;
-    if(e.target.closest(".cmt-toggle,.addimg,.media-x,.navdots"))return;
+    if(e.target.closest(".cmt-toggle,.edit-toggle,.addimg,.media-x,.navdots"))return;
     var el=e.target.closest("h1,h2,h3,p,li,tr,.tile,.card,.fstage,.vp,.ask,.pill,.t-body,svg,.media");
     if(!el)return;
     e.preventDefault();e.stopPropagation();
@@ -820,5 +858,31 @@
     }
     try{localStorage.setItem(CKEY,JSON.stringify(comments))}catch(e2){}
   },true);
+
+  /* ---------- edit mode (everything editable) ---------- */
+  var editMode=false;
+  var etoggle=document.createElement("button");
+  etoggle.className="edit-toggle";etoggle.textContent="✏️ Edit";
+  etoggle.addEventListener("click",function(){
+    editMode=!editMode;
+    if(editMode&&cmtMode) toggle.click();
+    etoggle.classList.toggle("on",editMode);
+    etoggle.textContent=editMode?"✏️ Editing — click any text":"✏️ Edit";
+    slides.forEach(function(s){
+      var f=s.querySelector(".frame");
+      if(f){
+        if(editMode) f.setAttribute("contenteditable","true");
+        else f.removeAttribute("contenteditable");
+      }
+    });
+  });
+  document.body.appendChild(etoggle);
+  var saveTimer=null;
+  deck.addEventListener("input",function(e){
+    var s=e.target&&e.target.closest?e.target.closest(".slide"):null;
+    if(!s)return;
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(function(){saveFrame(s)},400);
+  });
 })();
 </script>
